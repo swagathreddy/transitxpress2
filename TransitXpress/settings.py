@@ -151,6 +151,3 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# URL for serving static files
-STATIC_URL = '/static/'
-
