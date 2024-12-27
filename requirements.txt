@@ -1,0 +1,13 @@
+
+Django==5.1.4
+django-modeltranslation==0.19.11
+
+
+pillow==10.4.0
+
+psycopg2-binary==2.9.9
+qrcode==7.4.2
+twilio==9.3.1
+
+urllib3==2.2.3
+

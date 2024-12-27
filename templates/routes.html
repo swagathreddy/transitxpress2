@@ -1,0 +1,101 @@
+
+<!-- {% for opr in features %} 
+<div>
+    <h4 >{{opr.fromdesti}}  TO {{opr.todesti}}</h4><br>
+
+</div> 
+{% endfor %}  -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routes</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Include the CSS and other head content from index.html -->
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url(/static/image/hyderabad.jpg) ;
+            
+            background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover; /* Ensures the image covers the screen */
+    background-position: center; 
+            background-color: rgba(198, 178, 178, 0.8);
+            
+            
+        }
+
+        .bus-container {
+            background-color: rgba(38, 22, 22, 0.7);
+            margin-top: 400px;
+            max-width: 800px;
+            margin: 10rem auto;
+            color: azure;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bus {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        .bus-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .route {
+            flex-grow: 1;
+            margin-left: 20px;
+            font-size: 1.5rem;
+        }
+        .footer {
+    font-size: 1.2rem; /* Increase font size */
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8); /* Add background for better contrast */
+    padding: 10px 0;
+    position: fixed; /* Fix it at the bottom */
+    bottom: 0; /* Align to bottom */
+    width: 100%; /* Ensure it spans the full width */
+        }
+    </style>
+</head>
+<body>
+    {% include 'index_header.html' %}
+    <div class="bus-container">
+        {% for opr in features %} 
+            <div class="bus">
+                <div class="bus-number">{{ opr.id }}</div>
+                <div class="route">Route: {{ opr.fromdesti }} to {{ opr.todesti }}</div>
+                
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Your existing popup HTML and script here -->
+
+    <script>
+        function openPopup(busNumber) {
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
+</body>
+<footer class="footer">
+    &copy; 2024 TransitXpress . Built with Django and PostgreSQL
+</footer>
+</html>

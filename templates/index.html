@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransitXpress</title>
+    
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+<header class="header">
+    <a href="#" class="logo">TransitXpress</a>
+    <input type="checkbox" id="check">
+    <label for="check" class="icons">
+        <i class='bx bx-menu' id="menu-icon"></i>
+        <i class='bx bx-x' id="close-icon"></i>
+        
+    </label>
+    <nav class="navbar">
+            <a class="active" href="#">Home</a>
+            <a href="{% url 'routes' %}">Routes</a>
+            <a href="{% url 'tickets' %}">Your Tickets</a>
+            <a href="{% url 'parcel_delivery' %}">Parcel Delivery</a>
+            {% if user.is_authenticated %}
+            <a href="logout" >Welcome,{{user.username}}_____logout</a>
+            {% else %}
+            <a href="register" >Login/SignUp</a>
+            {% endif %}
+    </nav>
+</header>
+
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <script>
+                alert("{{ message }}");
+            </script>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div class="container">
+<div class="about">
+    <h1>"Revolutionize Your Travel Experience with Conductor-Less Transit!"</h1><br>
+        <h2>India's First inter-city Bus Booking website..</h2><br>
+        <h2>Book with ease</h2><br>
+        <h2>Secure Payments</h2><br>
+        <h2>Save your Time</h2><br>
+</div>
+<div class="destination">
+<form action="{% url 'search' %}" method='GET'>
+    {% csrf_token %}
+    <label class="label-text">From</label><br>
+    <input class="input-box" name="from_location" type="search" list="fromscripts" autofocus placeholder="Stop or City"><br>
+    <datalist id="fromscripts">
+        <option value="Anurag University">
+        <option value="Uppal">
+        <option value="Ecil">
+        <option value="Ghatkesar">
+    </datalist>
+    <label class="label-text">To</label><br>
+    <input class="input-box" type="text" name="to_location" type="search" list="toscripts" placeholder="Stop or City "><br>
+    <datalist id="toscripts">
+        <option value="Anurag University">
+        <option value="Uppal">
+        <option value="Ecil">
+        <option value="Ghatkesar">
+    </datalist>
+    <input class="input-box" type="date" name="bookingdate" placeholder="select date">
+    <input class="submitbtn" type="submit">
+</form>
+</div>
+
+</div>
+
+<h2 class="histo-title">Some Historic Places in Hyderabad To Visit</h2>
+<div class="historic">
+
+<div class="histo-img">
+    <div class="img-container">
+    <img class="imgs" src="{% static 'image/golkonda.jpg' %}" alt="not available">
+    </div>
+    <div class="histo-container">
+    <p>Golconda Fort, a majestic citadel in Hyderabad, beckons with its rich 
+        history and architectural grandeur. Explore the echoes of bygone eras 
+        as you wander through its imposing ramparts and marvel at the panoramic
+         views from its historic turrets.Visit this place ans mesmerize the 
+        art of mughals rule.</p>
+    <button onclick="window.location.href='/'">Book Now</button>
+    </div>
+    
+</div>
+<div class="histo-img">
+    <div class="img-container">
+    <img class="imgs" src="{% static 'image/charminar.jpg' %}" alt="not available">
+    </div>
+    <div class="histo-container">
+    <p>
+        Charminar, a historic monument in Hyderabad, India, is a mesmerizing
+         blend of Indo-Islamic architecture, adorned with intricate carvings and
+          grand arches. As a symbol of the city's rich heritage, a visit to
+           Charminar offers a captivating journey through centuries of cultural 
+           and historical significance.</p>
+    <button onclick="window.location.href='/'">Book Now</button>
+    </div>
+</div>
+<div class="histo-img">
+    <div class="img-container">
+    <img class="imgs" src="{% static 'image/sarlajung.jpg' %}" alt="not available">
+    </div>
+    <div class="histo-container">
+    <p>
+        The Salar Jung Museum, located in Hyderabad, India, boasts a remarkable 
+        collection of art, artifacts, and antiques from across the world. Its 
+        diverse exhibits, including rare manuscripts, sculptures, and exquisite 
+        paintings, offer visitors a captivating journey through the rich tapestry 
+        of human history and culture.</p>
+     <button onclick="window.location.href='/'">Book Now</button>
+    </div>
+</div>
+</div>
+
+
+
+</body>
+<footer class="footer">
+    &copy; 2024  TransitXpress . Built with Django and PostgreSQL
+</footer>
+
+</html>
+

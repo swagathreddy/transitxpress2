@@ -1,0 +1,111 @@
+<!-- parcel_delivery.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransitXpress - Parcel Delivery</title>
+    {% include 'index_head.html' %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url(/static/image/parcelimage.jpg) ;
+
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover; /* Ensures the image covers the screen */
+            background-position: center; 
+            background-color: rgba(198, 178, 178, 0.8);
+        }
+
+        .parcel_delivery {
+            
+            background-color: rgba(38, 22, 22, 0.7);
+            color: azure;
+            max-width: 600px;
+            margin: 12rem auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(171, 138, 138, 0.1);
+        }
+
+        .label-text {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .input-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .submitbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .footer{
+            margin-top: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: antiquewhite;
+            font-weight: 500;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .parcel_delivery {
+                margin: 10px;
+                padding: 10px;
+            }}
+            .footer {
+    font-size: 1.2rem; /* Increase font size */
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8); /* Add background for better contrast */
+    padding: 10px 0;
+    position: fixed; /* Fix it at the bottom */
+    bottom: 0px; /* Align to bottom */
+    width: 100%; /* Ensure it spans the full width */
+    
+        }
+        
+    </style>
+</head>
+<body>
+{% include 'index_header.html' %}
+<div class="parcel_delivery">
+    <h1>Parcel Delivery</h1>
+    <p>Deliver parcels from street to street with TransitXpress.</p>
+    
+      <form action="{% url 'search' %}" method='GET'>
+        {% csrf_token %}
+        <label class="label-text">From</label><br>
+        <input class="input-box" name="from_location" type="search" list="fromscripts" autofocus placeholder="Stop or City"><br>
+
+        <label class="label-text">To</label><br>
+        <input class="input-box" type="text" name="to_location" type="search" list="toscripts" placeholder="Stop or City "><br>
+
+        <label class="label-text">Delivery Date</label><br>
+        <input class="input-box" type="date" name="delivery_date" placeholder="Select date">
+
+        <input class="submitbtn" type="submit" value="Submit">
+    </form>
+</div>
+
+</body>
+<footer class="footer">
+    &copy; 2024  TransitXpress . Built with Django and PostgreSQL
+</footer>
+</html>

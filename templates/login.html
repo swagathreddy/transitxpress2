@@ -1,0 +1,106 @@
+<!-- <h1>login Now....</h1>
+
+{% for message in messages %}
+<h4>{{message}}</h4>
+{% endfor %}
+
+<form method="POST" action="login">
+{% csrf_token %}
+ <p>Username</p>
+ <input type="text" name="username" placeholder="Username"/>
+ <p>Password</p>
+ <input type="password" name="password" placeholder="Password"/>
+ <input type="submit"/>
+</form> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TransitXpress</title>
+     <!-- Add this line to link an external CSS file -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #2c3e50;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .login-button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .login-button:hover {
+            background-color: #c0392b;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .signup-link a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login to TransitXpress</h2>
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <input class="login-button" type="submit" value="Login">
+        </form>
+        <div class="signup-link">
+            Don't have an account? <a href="{% url 'register' %}">Sign up</a>
+        </div>
+        {% for message in messages %}
+             <h4>{{message}}</h4>
+        {% endfor %}    
+    </div>
+
+</body>
+</html>

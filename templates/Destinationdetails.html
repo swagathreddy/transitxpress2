@@ -1,0 +1,315 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Routes</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Include the CSS and other head content from index.html -->
+    {% include 'index_head.html' %}
+</head>
+
+<body>
+
+    {% include 'index_header.html' %}
+
+    {% block content %}
+    <div class="bus-container">
+        {% for message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="bus-container">
+        {% if routes %}
+        {% for route in routes %}
+        <div class="bus">
+            <div class="bus-image" onclick="showPlaceDetails('{{ route.place_notes }}')">
+                <!-- Move the opening <p> tag inside the div with the onclick function -->
+                <p>To know more about {{route.todesti}}, Tap on the image below</p>
+                {% if route.bus_image  and route.bus_image.url %}
+                <img src="{{ route.bus_image.url }}" alt="Bus Image">
+                {% else %}
+                <!-- Default image or placeholder -->
+                <img src="{% static 'default_bus_image.jpg' %}" alt="Default Bus Image">
+                {% endif %}
+            </div>
+            <!-- Move the closing </div> tag inside the div with the onclick function -->
+            <div class="bus-details">
+
+                <div class="route_details">{{ route.fromdesti }} - {{ route.todesti }}</div>
+                <h5 class="bus_name">Bus Name:{{ route.bus_name }}</h5>
+                <p class="bus_number"><span class="label">Bus Number:</span> {{ route.bus_number }}</p>
+                <p class="Ticket_fare"><span class="label">Ticket Fare:</span>{{ route.ticket_fare }}rs</p>
+                <p class="arrival_time"><span class="label">Arrival Time:</span>{{ route.arrival_time}}</p>
+                {% if user.is_authenticated %}
+                <a href="{% url 'user_confirmation' route.id %}" class="book-now-button">Book Now</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="login-link">Login/register to Book</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+    </div>
+    <div id="placeModal" class="modal">
+        <div id="placeModalContent" class="modal-content">
+            <span class="close" onclick="closePlaceDetails()">&times;</span>
+        </div>
+    </div>
+  
+
+</body>
+<footer class="footer">
+    &copy; 2024 TransitXpress . Built with Django and PostgreSQL
+</footer>
+
+</html>
+<script>
+    function showPlaceDetails(placeNotes, imageUrl) {
+        var modal = document.getElementById('placeModal');
+        var modalContent = document.getElementById('placeModalContent');
+
+        // Set the content of the modal
+        modalContent.innerHTML = `
+            <span class="close" onclick="closePlaceDetails()">&times;</span>
+            
+            <p>${placeNotes}</p>
+        `;
+
+        // Display the modal
+        modal.style.display = 'block';
+    }
+
+    function closePlaceDetails() {
+        var modal = document.getElementById('placeModal');
+
+        // Close the modal
+        modal.style.display = 'none';
+    }
+
+    window.onclick = function (event) {
+        var modal = document.getElementById('placeModal');
+        if (event.target == modal) {
+            // If the user clicks outside the modal, close it
+            modal.style.display = 'none';
+        }
+    };
+</script>
+<style>
+    /* Add your existing styles here */
+
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url(/static/image/hyderabad.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover; /* Ensures the image covers the screen */
+    background-position: center; /* Centers the image */
+    background-color: rgba(198, 178, 178, 1); /* Fallback background color */
+    
+}
+
+
+ 
+
+    .message {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border: 1px solid #f5c6cb;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        margin-top: 100px;
+    }
+
+    .bus-container {
+        background-color: rgba(38, 22, 22, 0.5);
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        color: #fff;
+    }
+    .bus {
+        background-color: rgba(38, 22, 22, 0.7);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 60px;
+    }
+    .label {
+        font-weight: bold;
+        color:bisque /* You can adjust the color as needed */
+    }
+    .bus_name{
+        padding: 10px;
+        margin: 0;
+        
+    }
+    .bus-image img {
+        margin-top: 5%;
+        width: 100%;
+        max-width: 250px; /* Adjust the max-width based on your design */
+        height: 200px;
+        
+    }
+
+    .bus-details {
+        flex-grow: 1;
+        margin-left: 20px;
+        font-size: 1.5rem;
+    }
+    .bus-image p{
+        max-width: 250px;
+        
+    }
+    .bus_number {
+        margin-top: 10%;
+        margin-left: auto;
+        max-width: 300px;
+        font-size: 1.3rem;
+    }
+    .Ticket_fare{
+        margin-top: 4%;
+        margin-left: auto;
+        max-width: 250px;
+        font-size: 1.3rem;
+    }
+
+    .route_details {
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 1.7rem;
+        
+    }
+    .arrival_time{
+        padding: 10px;
+        margin-left: auto;
+    }
+
+    .book-now-button {
+        
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        padding: 8px 15px;
+        font-size: 0.8em;
+        cursor: pointer;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-left: auto;
+        float: right;
+        margin-right: 0;
+    }
+
+    .book-now-button:hover {
+        background-color: #205222;
+    }
+
+    .login-link {
+        color: #007BFF;
+        text-decoration: none;
+        font-size: 1.2rem;
+        margin-left: 20px;
+    }
+    /* Add this to your existing styles or update accordingly */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    text-align: center;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+}
+.footer{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+    @media (max-width: 600px) {
+        .body{
+            background-image: url(static/image/hyderabad-mobile.png) ;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            
+            overflow-x: hidden;
+        }
+        .bus {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .route_details{
+            font-size: 1.8rem;
+            margin-right: 10%;
+        }
+        .bus-details {
+            margin-left: 10%;
+            text-align: center;
+        }
+
+        .bus-image img {
+            width: 100%;
+            max-width: none;
+            height: auto;
+        }
+        .bus_number {
+            font-size: 1.2rem;
+            max-width: 350px;
+            margin-right: 10%;
+            
+        }
+        .Ticket_fare{
+            font-size: 1.2rem;
+            margin-right: 15%;
+            
+        }
+        .bus_name{
+            margin-right: 10%;
+        }
+        .arrival_time{
+            font-size: 1.2rem;
+            margin-right: 10%;
+        }
+    }
+</style>
+
+
+{% endblock %}
+
